@@ -16,6 +16,21 @@ const holidays = [
     { date: "12/25/2022", name: "Natal" }
   ];
 
+
+function FiltrarFeriados(mes){
+
+    const feriadosFiltrados = holidays.filter(holiday => {
+        
+        if(new Date(holiday.date).getMonth() === mes -1){
+            return holiday
+        }
+    })
+
+    return feriadosFiltrados
+
+}
+
+
 function isTodayHoliday(){
     let controlador = false;
     const hoje = new Date();
@@ -28,6 +43,12 @@ function isTodayHoliday(){
 
 app.get('/holidays', (request, response) => {
     response.send(holidays);
+});
+
+app.get('/holidays/:mes', (request, response) => {
+    const mes = parseInt(request.params.mes);
+    const feriados = FiltrarFeriados(mes);
+    response.send(feriados);
 });
 
 app.get('/is-today-holiday', (request, response) => {
